@@ -11,6 +11,15 @@ import com.cognizant.model.Student;
 public class StudentServiceImpl implements StudentService{
 	@Autowired
     private StudentDao studentDao;
+	
+	/*public StudentDao getStudentDao() {
+		return studentDao;
+	}*/
+
+	public void setStudentDao(StudentDao studentDao) {
+		this.studentDao = studentDao;
+	}
+
 	@Override
 	public int create(Student student) {
 		// TODO Auto-generated method stub

@@ -30,9 +30,9 @@ public class StudentDaoImpl implements StudentDao{
 
 	@Override
 	public int update(Student student) {
-      String sql ="Update Student set name = ? where id =?";
+      String sql ="Update Student set name = ?,course= ? where id =?";
 		
-		int r = jdbcTemplate.update(sql,student.getName(),student.getId(),student.getCourse());
+		int r = jdbcTemplate.update(sql,student.getName(),student.getCourse(),student.getId());
 		return r;
 	}
 
@@ -53,7 +53,7 @@ public class StudentDaoImpl implements StudentDao{
 
 	@Override
 	public int countStudent() {
-		String sql="select count(*) as total_record from Student";
+		String sql="select count(*) from Student";
 		
 		return jdbcTemplate.queryForObject(sql, Integer.class);
 		
@@ -63,14 +63,14 @@ public class StudentDaoImpl implements StudentDao{
 	public List<Student> findByName(String name) {
 		String sql="select * from Student where name=?";
 		
-		return jdbcTemplate.query(sql,new Object[]{name},
+		/*return jdbcTemplate.query(sql,new Object[]{name},
                 (rs, rowNum) ->
         new Student(
                 rs.getInt(1),
                 rs.getString(2),
-                rs.getString(3)
-        )
-);
+                rs.getString(3) )
+);*/
+		return jdbcTemplate.query(sql,(rs,rowNum) ->new Student(rs.getInt(1),rs.getString(2),rs.getString(3)),name);
 	}
 
 }

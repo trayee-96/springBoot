@@ -12,14 +12,12 @@
 	<h1>Update Information of Student</h1>
 	${msg }
 
-	<form action="delete" method="post">
-
-	Id : <input type = "text" id = "id" name ="id"/>
-
-
+	<form:form action="delete" method="post" modelAttribute="Student">
+		<form:label path="id">Id</form:label>
+		<form:input path="id" />
+		
 		<input type="submit" name="submit" value="delete" />
-
-	</form>
+	</form:form>
 
 </body>
 </html>

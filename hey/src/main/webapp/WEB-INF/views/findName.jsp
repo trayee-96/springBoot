@@ -8,21 +8,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Student Details</h1>
+<h1>Find Student By name</h1>
 ${msg}
-<table border="2">
-<tr>
-<th>ID</th>
-<th>Name</th>
-<th>Course</th>
-</tr>
-<c:forEach items="${list}" var="st">
-<tr>
-<td>${st.id}</td>
-<td>${st.name}</td>
-<td>${st.course}</td>
-</tr>
-</c:forEach>
-</table>
+<form action="findName" method="post" >
+		Name : <input type = "text" id = "name" name ="name" value = "${name}"/>
+	<input type ="reset">
+		<input type="submit" name="submit" value="Find" />
+		</form>
 </body>
 </html>

@@ -18,7 +18,7 @@ ${msg}
 		<form:input path="name" />
 		<form:label path="name">Course</form:label>
 		<form:input path="course" />
-		<input type="submit" name="submit" value="submit" />
+		<input type="submit" name="submit" value="insert" />
 	</form:form>
 </body>
 </html>

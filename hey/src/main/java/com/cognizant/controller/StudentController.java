@@ -38,33 +38,35 @@ public ModelAndView pageCreate(){
 	
 	 return mv;
 }
-/*@RequestMapping(value="insert",method=RequestMethod.POST)
-public ModelAndView insert(@ModelAttribute(Student)Student s) {
+@RequestMapping(value="insert",method=RequestMethod.POST)
+public ModelAndView insert(@ModelAttribute("Student")Student s) {
 	System.out.println("Model Attribute:"+s);
 	ModelAndView mv = new ModelAndView("insert");
-	Student st=new Student(s.getId(),s.getName(),s.getCourse());
-	int res=studentService.create(st);
+	//Student st=new Student(s.getId(),s.getName(),s.getCourse());
+	int res=studentService.create(s);
 	if(res==1)
 	mv.addObject("msg", "Record Inserted");
 	else
 		mv.addObject("msg", "Record not Inserted");
 	return mv;
-}*/
+}
 
 @RequestMapping(value="update", method=RequestMethod.GET)
-public ModelAndView updatePage(@RequestParam(value="id",required = false) String id)
+public ModelAndView updatePage()
 {
 	ModelAndView mv = new ModelAndView("update");
-	mv.addObject("id",id);
+	Student student=new Student();
+	mv.addObject("Student",student);
 	
 	return mv;
 }
 @RequestMapping(value="update", method=RequestMethod.POST)
-public ModelAndView update(@ModelAttribute("student") Student s)
+public ModelAndView update(@ModelAttribute("Student") Student s)
 {
-	ModelAndView mv = new ModelAndView("update");
-	Student su=new Student(s.getId(),s.getName(),s.getCourse());
-	int r=studentService.update(su);
+	 System.out.println("Model Attribute:" + s);
+     ModelAndView mv = new ModelAndView("update");
+	//Student su=new Student(s.getId(),s.getName(),s.getCourse());
+	int r=studentService.update(s);
 	if(r==1)
 	mv.addObject("msg", "Record Updated");
 	else
@@ -77,14 +79,21 @@ public ModelAndView deletePage()
 {
 	ModelAndView mv=new ModelAndView("delete");
 	Student student=new Student();
-	mv.addObject("student",student);
+	mv.addObject("Student",student);
 	return mv;
 }
 @RequestMapping(value="delete",method=RequestMethod.POST)
-public ModelAndView delete(@RequestParam(value="id")int id) {
-	ModelAndView mv = new ModelAndView("delete");
-	Integer intObj=new Integer(id);
-	int res=studentService.delete(intObj.intValue());
+public ModelAndView delete(@ModelAttribute("Student")Student s) {
+	//ModelAndView mv = new ModelAndView("delete");
+	//Integer intObj=new Integer(id);
+	int res=studentService.delete(s.getId());
+	ModelAndView mv = new ModelAndView("display");
+
+	List<Student> list = studentService.findAll();
+
+	mv.addObject("list", list);
+
+	
 	if(res==1) {
 		mv.addObject("msg","record deleted");
 	}
@@ -92,7 +101,29 @@ public ModelAndView delete(@RequestParam(value="id")int id) {
 		mv.addObject("msg","record deletion failed");
 	}
 		
-	return findAll();
+	return mv;
+}
+@RequestMapping(value="findName",method=RequestMethod.GET)
+public ModelAndView findByNamePage() {
+	ModelAndView mv=new ModelAndView("findName");
+	Student student=new Student();
+	mv.addObject("Student",student);
+	return mv;
 	
+}
+@RequestMapping(value="findName",method=RequestMethod.POST)
+public ModelAndView findByNamePage(@RequestParam(value="name")String name) {
+	ModelAndView mv=new ModelAndView("display");
+	//Student student=new Student();
+	List<Student> list=studentService.findByName(name);
+	mv.addObject("list",list);
+	return mv;
+}
+@RequestMapping(value="countStudent",method=RequestMethod.GET)
+public ModelAndView countpage() {
+	 ModelAndView mv=new ModelAndView("countStudent");
+	 int result=studentService.countStudent();
+	 mv.addObject("msg",result);
+	 return mv;
 }
 }
